@@ -7,9 +7,30 @@ LABEL maintainer="Kyle Manna <kyle@kylemanna.com>"
 
 # Testing: pamtester
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
-    apk add --update openvpn iptables bash easy-rsa openvpn-auth-pam google-authenticator pamtester libqrencode && \
+    apk add --update openvpn \ 
+        iptables \
+        bash \
+        easy-rsa \
+        openvpn-auth-pam \
+        google-authenticator \
+        pamtester \
+        libqrencode \
+        python3-dev \
+        openldap-dev \
+        cyrus-sasl-dev \
+        openssl-dev \
+        gcc \
+        musl-dev \
+        libffi-dev \
+        make \
+        py3-pip \
+        build-base \
+        pipx && \
     ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
+
+# Installing binary necessary for LDAP authentication
+RUN pipx install openvpn-ldap-auth
 
 # Needed by scripts
 ENV OPENVPN=/etc/openvpn
