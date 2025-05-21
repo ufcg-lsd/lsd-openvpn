@@ -15,6 +15,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/reposi
         google-authenticator \
         pamtester \
         libqrencode \
+        python3 \
         python3-dev \
         openldap-dev \
         cyrus-sasl-dev \
@@ -29,8 +30,7 @@ RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/reposi
     ln -s /usr/share/easy-rsa/easyrsa /usr/local/bin && \
     rm -rf /tmp/* /var/tmp/* /var/cache/apk/* /var/cache/distfiles/*
 
-# Installing binary necessary for LDAP authentication
-RUN pipx install openvpn-ldap-auth
+RUN pip install --break-system-packages python-ldap pyyaml cerberus
 
 # Needed by scripts
 ENV OPENVPN=/etc/openvpn
